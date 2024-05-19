@@ -15,50 +15,43 @@ interface Api {
     suspend fun getNowPlayingMovies(
         @Query("language") language: String?,
         @Query("page") page: Int?,
-        @Query("region") region: String?,
-        @Header("Authorization") apiKey: String
+        @Query("region") region: String?
     ): MovieResponse
 
     @GET("${PathConstant.BASE_MOVIE_URL}/popular")
     suspend fun getPopularMovies(
         @Query("language") language: String?,
         @Query("page") page: Int?,
-        @Query("region") region: String?,
-        @Header("Authorization") apiKey: String
+        @Query("region") region: String?
     ): MovieResponse
 
     @GET("${PathConstant.BASE_MOVIE_URL}/top_rated")
     suspend fun getTopRatedMovies(
         @Query("language") language: String?,
         @Query("page") page: Int?,
-        @Query("region") region: String?,
-        @Header("Authorization") apiKey: String
+        @Query("region") region: String?
     ): MovieResponse
 
     @GET("${PathConstant.BASE_MOVIE_URL}/upcoming")
     suspend fun getUpcomingMovies(
         @Query("language") language: String?,
         @Query("page") page: Int?,
-        @Query("region") region: String?,
-        @Header("Authorization") apiKey: String
+        @Query("region") region: String?
     ): MovieResponse
 
     @GET("${PathConstant.BASE_MOVIE_URL}/{movie_id}")
     suspend fun getMovieDetails(
-        @Path("movie_id") movieId: Long,
-        @Header("Authorization") apiKey: String
+        @Path("movie_id") movieId: Long
     ): Movie
 
     @GET("${PathConstant.BASE_MOVIE_URL}/{movie_id}/credits")
     suspend fun getMovieCredits(
-        @Path("movie_id") movieId: Long,
-        @Header("Authorization") apiKey: String
+        @Path("movie_id") movieId: Long
     ): CreditsResponse
 
     @GET("${PathConstant.BASE_MOVIE_URL}/{movie_id}/videos")
     suspend fun getMovieVideos(
-        @Path("movie_id") movieId: Long,
-        @Header("Authorization") apiKey: String
+        @Path("movie_id") movieId: Long
     ): VideoResponse
 }
 

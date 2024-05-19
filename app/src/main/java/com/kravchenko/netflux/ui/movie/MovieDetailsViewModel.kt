@@ -25,8 +25,9 @@ class MovieDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _movieDetailsState.value = MovieDetailsState.Loading
             try {
-                val movie = repository.getMovieDetails(movieId, "Bearer tmdb_api_key")
+                val movie = repository.getMovieDetails(movieId)
                 _movieDetailsState.value = MovieDetailsState.Success(movie)
+
                 Log.d("MovieDetailsViewModel", "Movie: $movie")
                 Log.d("MovieDetailsViewModel", "Cast: ${movie.cast}")
                 Log.d("MovieDetailsViewModel", "Crew: ${movie.crew}")

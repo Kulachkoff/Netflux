@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.ImageLoader
 import coil.request.ImageRequest
+import com.kravchenko.netflux.BuildConfig
 import com.kravchenko.netflux.models.Movie
 import com.kravchenko.netflux.repository.MovieRepository
 import com.kravchenko.netflux.ui.landing.LandingState
@@ -35,10 +36,11 @@ class HomeViewModel @Inject constructor(
     fun fetchMovies() {
         viewModelScope.launch {
             try {
-                val nowPlayingMovies = repository.getNowPlayingMovies("Bearer tmdb_api_key")
-                val popularMovies = repository.getPopularMovies("Bearer tmdb_api_key")
-                val topRatedMovies = repository.getTopRatedMovies("Bearer tmdb_api_key")
-                val upcomingMovies = repository.getUpcomingMovies("Bearer tmdb_api_key")
+                println(BuildConfig.TMDB_API_KEY)
+                val nowPlayingMovies = repository.getNowPlayingMovies()
+                val popularMovies = repository.getPopularMovies()
+                val topRatedMovies = repository.getTopRatedMovies()
+                val upcomingMovies = repository.getUpcomingMovies()
 
                 val backdropPaths = popularMovies.map { it.backdropPath }.shuffled()
                 val loadedPosters = mutableListOf<Drawable>()
