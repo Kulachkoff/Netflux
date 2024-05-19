@@ -32,7 +32,7 @@ class HomeViewModel @Inject constructor(
         fetchMovies()
     }
 
-    private fun fetchMovies() {
+    fun fetchMovies() {
         viewModelScope.launch {
             try {
                 val nowPlayingMovies = repository.getNowPlayingMovies("Bearer tmdb_api_key")
@@ -60,7 +60,7 @@ class HomeViewModel @Inject constructor(
                     posters = loadedPosters
                 )
             } catch (e: Exception) {
-                _homeState.value = HomeState.Error(e.message ?: "Unknown error")
+                _homeState.value = HomeState.Error("Failed to load movie details.")
             }
         }
     }

@@ -22,7 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.kravchenko.netflux.ui.movie.ErrorScreen
 import com.kravchenko.netflux.ui.movie.LoadingScreen
+import com.kravchenko.netflux.ui.movie.MovieDetailsState
 import com.kravchenko.netflux.ui.navigation.Routes
 import com.kravchenko.netflux.ui.theme.PrimaryBlack90
 import com.kravchenko.netflux.ui.theme.PrimaryGreen
@@ -45,11 +47,9 @@ fun LandingScreen(navController: NavController, viewModel: LandingViewModel) {
             )
         }
         is LandingState.Error -> {
-            val message = (landingState as LandingState.Error).message
-            Text(
-                text = message,
-                color = Color.Red
-            )
+            ErrorScreen((landingState as LandingState.Error).message) {
+                viewModel.fetchPopularMovies()
+            }
         }
     }
 }

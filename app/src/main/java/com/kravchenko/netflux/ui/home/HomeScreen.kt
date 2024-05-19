@@ -36,7 +36,9 @@ import coil.compose.rememberAsyncImagePainter
 import com.kravchenko.netflux.R
 import com.kravchenko.netflux.models.Movie
 import com.kravchenko.netflux.ui.landing.ImageCarousel
+import com.kravchenko.netflux.ui.movie.ErrorScreen
 import com.kravchenko.netflux.ui.movie.LoadingScreen
+import com.kravchenko.netflux.ui.movie.MovieDetailsState
 import com.kravchenko.netflux.ui.navigation.Routes
 import com.kravchenko.netflux.ui.theme.BackgroundBlack
 import com.kravchenko.netflux.ui.theme.LightGrey
@@ -59,8 +61,9 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             )
         }
         is HomeState.Error -> {
-            val message = (homeState as HomeState.Error).message
-            Text(text = message, color = Color.Red)
+            ErrorScreen((homeState as HomeState.Error).message) {
+                viewModel.fetchMovies()
+            }
         }
     }
 }
