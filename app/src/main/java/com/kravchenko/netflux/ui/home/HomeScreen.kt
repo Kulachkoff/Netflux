@@ -1,6 +1,7 @@
 package com.kravchenko.netflux.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -51,52 +52,66 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
             LoadingScreen("Loading...")
         }
         is HomeState.Success -> {
-            val state = homeState as HomeState.Success
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(scrollState)
-            ) {
-                ImageCarousel(
-                    posters = state.posters,
-                    modifier = Modifier.fillMaxWidth()
-                        .height(400.dp)
-                        .graphicsLayer {
-                            translationY = scrollState.value * 0.5f
-                        },
-                )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(BackgroundBlack)
-                        .padding(start = 12.dp, top = 20.dp)
-                ) {
-                    MovieCategorySection(
-                        title = "Now Playing",
-                        movies = state.nowPlayingMovies,
-                        navController = navController
-                    )
-                    MovieCategorySection(
-                        title = "Popular",
-                        movies = state.popularMovies,
-                        navController = navController
-                    )
-                    MovieCategorySection(
-                        title = "Top Rated",
-                        movies = state.topRatedMovies,
-                        navController = navController
-                    )
-                    MovieCategorySection(
-                        title = "Upcoming",
-                        movies = state.upcomingMovies,
-                        navController = navController
-                    )
-                }
-            }
+            HomeContent(
+                navController = navController,
+                homeState = homeState,
+                scrollState = scrollState
+            )
         }
         is HomeState.Error -> {
             val message = (homeState as HomeState.Error).message
             Text(text = message, color = Color.Red)
+        }
+    }
+}
+
+@Composable
+fun HomeContent(
+    navController: NavController,
+    homeState: HomeState,
+    scrollState: ScrollState
+) {
+    val state = homeState as HomeState.Success
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+    ) {
+        ImageCarousel(
+            posters = state.posters,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(400.dp)
+                .graphicsLayer {
+                    translationY = scrollState.value * 0.5f
+                },
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(BackgroundBlack)
+                .padding(start = 12.dp, top = 20.dp)
+        ) {
+            MovieCategorySection(
+                title = "Now Playing",
+                movies = state.nowPlayingMovies,
+                navController = navController
+            )
+            MovieCategorySection(
+                title = "Popular",
+                movies = state.popularMovies,
+                navController = navController
+            )
+            MovieCategorySection(
+                title = "Top Rated",
+                movies = state.topRatedMovies,
+                navController = navController
+            )
+            MovieCategorySection(
+                title = "Upcoming",
+                movies = state.upcomingMovies,
+                navController = navController
+            )
         }
     }
 }
